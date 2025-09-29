@@ -17,5 +17,4 @@ This Jenkins pipeline automates the deployment of a Java web application. The st
 4. **Deploy**  
    Pushes the built `.war` file to a remote Tomcat 9 server.
 
-## Pipeline Flow
 
