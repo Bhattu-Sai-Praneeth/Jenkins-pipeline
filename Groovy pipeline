@@ -1,0 +1,83 @@
+pipeline {
+
+    agent { label 'slave1' }
+
+    stages {
+
+        stage('GIT Checkout') {
+
+            steps {
+
+                git 'https://github.com/Bhattu-Sai-Praneeth/java-project-maven-new.git'
+
+            }
+
+        }
+
+        stage('Maven Build') {
+
+            steps {
+
+                sh '''
+
+                mvn compile
+
+                mvn package
+
+                mvn install
+
+                '''
+
+            }
+
+        }
+
+        stage('User Approval') {
+
+            steps {
+
+                script {
+
+                    input message: 'DO YOU WANT TO PROCEED?', ok: 'Yes'
+
+                }
+
+            }
+
+        }
+
+        stage('Deploy to Tomcat') {              
+
+            steps {
+
+                deploy adapters: [tomcat9(
+
+                    alternativeDeploymentContext: '', 
+
+                    credentialsId: 'tomcat-creds', 
+
+                    path: '', 
+
+                    url: 'http://13.235.103.197:8080/'
+
+                )], 
+
+                contextPath: 'newapp', 
+
+                war: '**/*.war'
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+for this i want architecture diagram of jenkins maven git apache war file flow and 2l=slave nodes
